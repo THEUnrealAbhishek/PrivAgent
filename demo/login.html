@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrivAgent Demo — Login</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <nav class="nav">
+      <div class="nav-brand">🛡️ PrivAgent Demo</div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="scholarship.html">Scholarship</a>
+        <a href="login.html" class="active">Login</a>
+      </div>
+    </nav>
+
+    <main class="main-content center-content">
+      <div class="login-container">
+        <div class="login-header">
+          <div class="login-icon">🔐</div>
+          <h1>Sign In</h1>
+          <p>Access your scholarship portal</p>
+          <div class="demo-badge">🔬 DEMO PAGE — Test PII for privacy demonstration</div>
+        </div>
+
+        <form id="loginForm" onsubmit="return false;">
+          <div class="form-group">
+            <label for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" name="email" value="rahul.sharma@gmail.com"
+                   placeholder="Enter your email" aria-label="Login Email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" name="password" value="MyS3cret!Pass"
+                   placeholder="Enter your password" aria-label="Login Password" required>
+          </div>
+
+          <div class="form-options">
+            <label class="checkbox-label">
+              <input type="checkbox" id="rememberMe" name="remember">
+              Remember me
+            </label>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" id="loginSubmit" class="btn-primary btn-full">
+            Sign In
+          </button>
+
+          <div class="login-divider">
+            <span>or</span>
+          </div>
+
+          <button type="button" id="googleLogin" class="btn-social">
+            Continue with Google
+          </button>
+
+          <p class="signup-link">
+            Don't have an account? <a href="scholarship.html">Apply Now</a>
+          </p>
+        </form>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>PrivAgent Demo — SIH 2024 | This is a demonstration page with synthetic test data</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrivAgent Demo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <nav class="nav">
+      <div class="nav-brand">🛡️ PrivAgent Demo</div>
+      <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="scholarship.html">Scholarship</a>
+        <a href="login.html">Login</a>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <!-- Hero -->
+      <section class="hero">
+        <h1 class="hero-title">PrivAgent</h1>
+        <p class="hero-subtitle">Privacy-First AI Browser Agent</p>
+        <p class="hero-description">
+          An intelligent browser agent that understands web pages, detects sensitive information
+          locally, redacts PII <em>before</em> any network transmission, and executes AI-driven
+          browser actions — all while keeping your personal data private.
+        </p>
+        <div class="hero-actions">
+          <a href="scholarship.html" class="btn-primary">Try Scholarship Form →</a>
+          <a href="login.html" class="btn-secondary">Try Login Page →</a>
+        </div>
+      </section>
+
+      <!-- How it works -->
+      <section class="how-it-works">
+        <h2>How It Works</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <div class="step-icon">🔍</div>
+            <h3>DOM Analysis</h3>
+            <p>Extracts page structure, form fields, buttons, and interactive elements from the DOM</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <div class="step-icon">🛡️</div>
+            <h3>PII Detection</h3>
+            <p>Locally detects emails, phone numbers, Aadhaar, passwords, credit cards, and faces</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <div class="step-icon">🔒</div>
+            <h3>Redaction</h3>
+            <p>Replaces all sensitive values with semantic placeholders like [REDACTED_EMAIL]</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">4</div>
+            <div class="step-icon">📡</div>
+            <h3>Safe Transmission</h3>
+            <p>Sends <strong>only</strong> sanitized metadata to the backend — never raw PII</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">5</div>
+            <div class="step-icon">🤖</div>
+            <h3>AI Analysis</h3>
+            <p>LLM analyzes the sanitized page context and generates structured JSON actions</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">6</div>
+            <div class="step-icon">⚡</div>
+            <h3>Browser Action</h3>
+            <p>Extension executes click, fill, and scroll actions locally in the browser</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Privacy Architecture -->
+      <section class="architecture-section">
+        <h2>Privacy Architecture</h2>
+        <div class="architecture-diagram">
+          <div class="arch-layer browser-layer">
+            <h3>🌐 Browser (Local)</h3>
+            <div class="arch-items">
+              <span class="arch-item">DOM Extraction</span>
+              <span class="arch-item">Screenshot Capture</span>
+              <span class="arch-item">PII Detection (Regex + AI)</span>
+              <span class="arch-item">Face Detection (ONNX)</span>
+              <span class="arch-item">Redaction Engine</span>
+              <span class="arch-item">Action Executor</span>
+            </div>
+            <div class="privacy-boundary">
+              <span>━━━━ PRIVACY BOUNDARY ━━━━</span>
+              <small>Only sanitized data crosses this line</small>
+            </div>
+          </div>
+          <div class="arch-arrow">↓ Sanitized JSON Only ↓</div>
+          <div class="arch-layer server-layer">
+            <h3>☁️ Server</h3>
+            <div class="arch-items">
+              <span class="arch-item">FastAPI</span>
+              <span class="arch-item">Privacy Validator</span>
+              <span class="arch-item">LLM Provider</span>
+              <span class="arch-item">Action Generator</span>
+            </div>
+          </div>
+          <div class="arch-arrow">↓ Structured JSON Action ↓</div>
+          <div class="arch-layer action-layer">
+            <h3>⚡ Browser Action</h3>
+            <div class="arch-items">
+              <span class="arch-item">Click</span>
+              <span class="arch-item">Fill</span>
+              <span class="arch-item">Scroll</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Profile Demo Section -->
+      <section class="profile-section">
+        <h2>Sample User Profile</h2>
+        <div class="profile-card">
+          <img src="" alt="User avatar" class="avatar-placeholder" aria-label="User profile avatar photo">
+          <div class="profile-details">
+            <h3>Rahul Sharma</h3>
+            <p>📧 rahul.sharma@gmail.com</p>
+            <p>📱 +91 9876543210</p>
+            <p>🪪 Aadhaar: 1234 5678 9012</p>
+            <p>💳 Card: 4111 1111 1111 1111</p>
+            <p>🏛️ PAN: ABCDE1234F</p>
+          </div>
+          <div class="profile-note">
+            <strong>⚠️ Test Data:</strong> This synthetic PII demonstrates PrivAgent's
+            detection capabilities. None of this leaves the browser.
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>PrivAgent — Privacy-First AI Browser Agent | SIH 2024</p>
+      <p class="footer-small">All personal data shown is synthetic test data for demonstration purposes only.</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrivAgent Demo — Scholarship Application</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <nav class="nav">
+      <div class="nav-brand">🛡️ PrivAgent Demo</div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="scholarship.html" class="active">Scholarship</a>
+        <a href="login.html">Login</a>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="form-container">
+        <div class="form-header">
+          <h1>National Scholarship Application</h1>
+          <p class="form-subtitle">Ministry of Education — Government of India</p>
+          <div class="demo-badge">🔬 DEMO PAGE — Contains test PII for privacy demonstration</div>
+        </div>
+
+        <form id="scholarshipForm" onsubmit="return false;">
+          <!-- Personal Information -->
+          <fieldset class="form-section">
+            <legend>Personal Information</legend>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="fullName">Full Name *</label>
+                <input type="text" id="fullName" name="fullName" value="Rahul Sharma" required
+                       placeholder="Enter your full name" aria-label="Full Name">
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" value="rahul.sharma@gmail.com" required
+                       placeholder="Enter your email" aria-label="Email Address">
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" name="phone" value="+91 9876543210" required
+                       placeholder="Enter phone number" aria-label="Phone Number">
+              </div>
+
+              <div class="form-group">
+                <label for="aadhaar">Aadhaar Number *</label>
+                <input type="text" id="aadhaar" name="aadhaar" value="1234 5678 9012" required
+                       placeholder="XXXX XXXX XXXX" aria-label="Aadhaar Number">
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Academic Information -->
+          <fieldset class="form-section">
+            <legend>Academic Information</legend>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="institution">Institution Name</label>
+                <input type="text" id="institution" name="institution" value="IIT Delhi"
+                       placeholder="Enter institution name">
+              </div>
+
+              <div class="form-group">
+                <label for="course">Course</label>
+                <input type="text" id="course" name="course" value="B.Tech Computer Science"
+                       placeholder="Enter course name">
+              </div>
+
+              <div class="form-group">
+                <label for="year">Year of Study</label>
+                <select id="year" name="year">
+                  <option value="1">1st Year</option>
+                  <option value="2" selected>2nd Year</option>
+                  <option value="3">3rd Year</option>
+                  <option value="4">4th Year</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="gpa">CGPA</label>
+                <input type="number" id="gpa" name="gpa" value="8.5" step="0.1" min="0" max="10">
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Financial Information -->
+          <fieldset class="form-section">
+            <legend>Financial Details</legend>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="panCard">PAN Card</label>
+                <input type="text" id="panCard" name="panCard" value="ABCDE1234F"
+                       placeholder="Enter PAN" aria-label="PAN Card Number">
+              </div>
+
+              <div class="form-group">
+                <label for="accountNumber">Bank Account</label>
+                <input type="text" id="accountNumber" name="accountNumber" value="1234567890"
+                       placeholder="Account number" aria-label="Bank Account Number">
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Account Security -->
+          <fieldset class="form-section">
+            <legend>Account Security</legend>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="password">Create Password *</label>
+                <input type="password" id="password" name="password" value="MyS3cret!Pass" required
+                       placeholder="Create a password" aria-label="Password">
+              </div>
+
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password *</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" value="MyS3cret!Pass" required
+                       placeholder="Confirm password" aria-label="Confirm Password">
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Profile Photo -->
+          <fieldset class="form-section">
+            <legend>Profile Photo</legend>
+            <div class="photo-upload">
+              <img id="profilePhoto" src="" alt="Profile photo" class="avatar-placeholder"
+                   aria-label="Profile photo avatar">
+              <div class="photo-info">
+                <p>Upload a passport-size photograph</p>
+                <input type="file" id="photo" name="photo" accept="image/*">
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Actions -->
+          <div class="form-actions">
+            <button type="button" id="saveDraft" class="btn-secondary">Save Draft</button>
+            <button type="submit" id="submitApplication" class="btn-primary">Submit Application</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Privacy Demo Info -->
+      <aside class="privacy-info-card">
+        <h3>🛡️ What PrivAgent Does Here</h3>
+        <p>When you click <strong>Start PrivAgent</strong> in the extension:</p>
+        <ol>
+          <li><strong>Detects</strong> sensitive fields (email, phone, Aadhaar, password, PAN)</li>
+          <li><strong>Redacts</strong> all PII values with <code>[REDACTED_*]</code> placeholders</li>
+          <li><strong>Sends</strong> only sanitized metadata to the backend</li>
+          <li><strong>Receives</strong> structured JSON actions</li>
+          <li><strong>Executes</strong> actions locally in the browser</li>
+        </ol>
+        <div class="privacy-guarantee">
+          <strong>Privacy Guarantee:</strong> Your actual email (rahul.sharma@gmail.com),
+          phone (+91 9876543210), Aadhaar (1234 5678 9012), and password are
+          <em>never</em> sent to the server.
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <p>PrivAgent Demo — SIH 2024 | This is a demonstration page with synthetic test data</p>
+    </footer>
+  </div>
+</body>
+</html>

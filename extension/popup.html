@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrivAgent</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-row">
+        <div class="shield-icon">🛡️</div>
+        <div>
+          <h1 class="title">PrivAgent</h1>
+          <p class="subtitle">Privacy-First AI Browser Agent</p>
+        </div>
+      </div>
+      <div id="connectionBadge" class="badge badge-pending">
+        <span class="badge-dot"></span>
+        <span id="connectionText">Checking...</span>
+      </div>
+    </header>
+
+    <!-- Status Card -->
+    <div class="card status-card">
+      <div class="status-row">
+        <span class="status-label">Status</span>
+        <span id="statusBadge" class="state-badge state-ready">READY</span>
+      </div>
+      <div class="status-row">
+        <span class="status-label">Privacy</span>
+        <span id="privacyBadge" class="privacy-badge">🔒 Protected</span>
+      </div>
+    </div>
+
+    <!-- Main Action -->
+    <button id="analyzeBtn" class="btn btn-primary">
+      <span class="btn-icon">▶</span>
+      Start PrivAgent
+    </button>
+
+    <!-- Command Input -->
+    <div class="command-section">
+      <input type="text" id="commandInput" class="command-input" placeholder="Type a command (e.g., 'click submit')">
+      <button id="commandBtn" class="btn btn-secondary btn-small">Send</button>
+    </div>
+
+    <!-- Privacy Panel -->
+    <div id="privacyPanel" class="card privacy-panel hidden">
+      <h3 class="card-title">🔍 Privacy Detection</h3>
+
+      <div class="detection-grid">
+        <div class="detection-section">
+          <h4 class="detection-heading detected-heading">✓ Detected & Redacted</h4>
+          <ul id="detectedList" class="detection-list">
+            <li class="detection-item muted">Run analysis to detect PII...</li>
+          </ul>
+        </div>
+
+        <div class="detection-section">
+          <h4 class="detection-heading transmitted-heading">✓ Transmitted (Safe)</h4>
+          <ul class="detection-list safe-list">
+            <li class="detection-item">Semantic field metadata</li>
+            <li class="detection-item">Redacted placeholders</li>
+            <li class="detection-item">Safe UI structure</li>
+          </ul>
+        </div>
+
+        <div class="detection-section">
+          <h4 class="detection-heading blocked-heading">✗ NOT Transmitted</h4>
+          <ul class="detection-list blocked-list">
+            <li class="detection-item">Raw passwords</li>
+            <li class="detection-item">Raw emails</li>
+            <li class="detection-item">Raw phone numbers</li>
+            <li class="detection-item">Raw ID numbers</li>
+            <li class="detection-item">Raw face images</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions Panel -->
+    <div id="actionsPanel" class="card actions-panel hidden">
+      <h3 class="card-title">🤖 AI Actions</h3>
+      <div id="actionsList" class="actions-list"></div>
+    </div>
+
+    <!-- Sanitized Payload Preview -->
+    <div class="preview-section">
+      <button id="previewBtn" class="btn btn-link">
+        📋 View Sanitized Payload
+      </button>
+      <div id="previewPanel" class="card preview-panel hidden">
+        <h3 class="card-title">Sanitized Payload Preview</h3>
+        <pre id="payloadPreview" class="payload-preview"></pre>
+      </div>
+    </div>
+
+    <!-- Performance -->
+    <div id="perfPanel" class="card perf-panel hidden">
+      <h3 class="card-title">⚡ Performance</h3>
+      <div id="perfMetrics" class="perf-metrics"></div>
+    </div>
+
+    <!-- Error Display -->
+    <div id="errorPanel" class="card error-panel hidden">
+      <h3 class="card-title">⚠️ Error</h3>
+      <p id="errorText" class="error-text"></p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>PrivAgent v1.0</span>
+      <span>•</span>
+      <span>SIH 2024</span>
+      <span>•</span>
+      <span id="llmMode">Mock Mode</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "privagent",
+  "version": "1.0.0",
+  "description": "Privacy-First AI Browser Agent for Smart India Hackathon (SIH)",
+  "main": "extension/background.js",
+  "scripts": {
+    "test": "pytest tests/ -v",
+    "server": "python -m backend.main"
+  },
+  "keywords": [
+    "privacy",
+    "browser-agent",
+    "pii-detection",
+    "fastapi",
+    "chrome-extension",
+    "onnx-runtime-web",
+    "webgpu"
+  ],
+  "author": "PrivAgent Team",
+  "license": "MIT"
+}
