@@ -26,13 +26,22 @@ jobs:
 
       - name: Run Pytest Suite
         run: |
-          pytest tests/ -v --junitxml=test-results.xml
+          pytest tests/ -v
 
-  extension-validation:
+  extension-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Extension JS Tests
+        run: |
+          node tests/test_extension.js
 
       - name: Validate Manifest V3 JSON
         run: |

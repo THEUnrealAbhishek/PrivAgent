@@ -4,7 +4,9 @@
   "description": "Privacy-First AI Browser Agent for Smart India Hackathon (SIH)",
   "main": "extension/background.js",
   "scripts": {
-    "test": "pytest tests/ -v",
+    "test": "node tests/test_extension.js && pytest tests/ -v",
+    "test:js": "node tests/test_extension.js",
+    "test:py": "pytest tests/ -v",
     "server": "python -m backend.main"
   },
   "keywords": [

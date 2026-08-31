@@ -25,7 +25,16 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["privacy/pii-detector.js", "privacy/redactor.js", "privacy/sanitizer.js", "content.js"],
+      "js": [
+        "privacy/pii-detector.js",
+        "privacy/redactor.js",
+        "privacy/sanitizer.js",
+        "privacy/face-detector.js",
+        "ai/local-model.js",
+        "ai/inference.js",
+        "actions/executor.js",
+        "content.js"
+      ],
       "run_at": "document_idle"
     }
   ],

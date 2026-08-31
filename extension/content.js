@@ -1,8 +1,8 @@
 /**
  * PrivAgent - Content Script
  * Runs in the context of web pages.
- * Coordinates DOM extraction, PII detection, sanitization,
- * and action execution.
+ * Coordinates DOM extraction, local PII detection, visual/face detection,
+ * sanitization, and action execution.
  */
 
 (function() {
@@ -50,12 +50,11 @@
 
   /**
    * Main analysis flow:
-   * 1. Extract DOM
-   * 2. Detect PII locally
-   * 3. Build sanitized payload
-   * 4. Send to backend
-   * 5. Receive actions
-   * 6. Execute actions
+   * 1. Extract DOM & run local AI / face / PII pipeline
+   * 2. Build sanitized payload (Zero-PII guarantee)
+   * 3. Send to backend
+   * 4. Receive actions
+   * 5. Execute actions
    */
   async function handleAnalyze(message) {
     const timings = {};
@@ -65,9 +64,31 @@
       _processingState = 'ANALYZING';
       _notifyPopup({ state: 'ANALYZING' });
 
-      // Step 1: Build sanitized payload (includes PII detection & redaction)
+      // Step 1: Run local inference pipeline (DOM, Face heuristic/ONNX, Vision)
+      const localInferenceStart = performance.now();
+      let localInference = null;
+      if (typeof InferenceEngine !== 'undefined') {
+        try {
+          localInference = await InferenceEngine.runPipeline();
+        } catch (e) {
+          console.warn('[PrivAgent] Local inference note:', e.message);
+        }
+      }
+      timings.local_inference_ms = Math.round(performance.now() - localInferenceStart);
+
+      // Step 2: Build sanitized payload (includes PII detection & redaction)
       const sanitizeStart = performance.now();
       const payload = Sanitizer.buildSanitizedPayload();
+      
+      // Merge local vision/face detection summary if detected
+      if (localInference && localInference.faces && localInference.faces.detected) {
+        if (!payload.privacy_summary.detected_types) {
+          payload.privacy_summary.detected_types = {};
+        }
+        payload.privacy_summary.detected_types.face = localInference.faces.count;
+        payload.privacy_summary.redacted_count += localInference.faces.count;
+      }
+
       timings.sanitization_ms = Math.round(performance.now() - sanitizeStart);
       _lastPayload = payload;
 
@@ -77,7 +98,7 @@
         privacySummary: payload.privacy_summary,
       });
 
-      // Step 2: Send sanitized payload to backend
+      // Step 3: Send sanitized payload to backend
       const networkStart = performance.now();
       const response = await fetch(`${API_BASE}/analyze`, {
         method: 'POST',
@@ -100,7 +121,7 @@
         privacyVerified: result.privacy_verified,
       });
 
-      // Step 3: Execute actions if auto-execute is enabled
+      // Step 4: Execute actions if auto-execute is enabled
       if (message.autoExecute !== false && result.actions && result.actions.length > 0) {
         const execStart = performance.now();
         const execResults = await ActionExecutor.executeAll(result.actions);

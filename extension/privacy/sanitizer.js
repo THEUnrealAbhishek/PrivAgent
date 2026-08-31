@@ -59,7 +59,7 @@ const Sanitizer = (() => {
         label: label,
         placeholder: el.placeholder || null,
         visible: _isVisible(el),
-        aria_label: el.getAttribute('aria-label') || null,
+        aria_label: el.getAttribute ? el.getAttribute('aria-label') : null,
         redacted: false,
         value: null,
       };
@@ -96,13 +96,28 @@ const Sanitizer = (() => {
     const elements = document.querySelectorAll('button, input[type="submit"], input[type="button"], [role="button"]');
 
     elements.forEach((el) => {
+      // If it's an input, only allow type submit or button
+      if (el.tagName === 'INPUT' && el.type !== 'submit' && el.type !== 'button') {
+        return;
+      }
+
+      let btnText = '';
+      if (el.tagName === 'INPUT') {
+        btnText = (el.value || '').trim();
+      } else {
+        btnText = (el.textContent || '').trim();
+      }
+
+      // Check button text for accidental PII
+      btnText = Redactor.redactText(btnText.substring(0, 100));
+
       buttons.push({
         id: el.id || null,
         name: el.name || null,
         type: 'button',
         tag: el.tagName.toLowerCase(),
-        text: (el.textContent || el.value || '').trim().substring(0, 100),
-        label: el.getAttribute('aria-label') || null,
+        text: btnText,
+        label: el.getAttribute ? el.getAttribute('aria-label') : null,
         visible: _isVisible(el),
       });
     });
@@ -116,9 +131,12 @@ const Sanitizer = (() => {
 
     elements.forEach((el) => {
       if (!_isVisible(el)) return;
+      let linkText = (el.textContent || '').trim().substring(0, 100);
+      linkText = Redactor.redactText(linkText);
+
       links.push({
         id: el.id || null,
-        text: (el.textContent || '').trim().substring(0, 100),
+        text: linkText,
         href: el.href ? new URL(el.href, window.location.href).pathname : null,
         visible: true,
       });
@@ -130,9 +148,9 @@ const Sanitizer = (() => {
 
   function _extractPageMetadata() {
     return {
-      url: window.location.pathname,  // Only path, not full URL with params
+      url: window.location ? window.location.pathname : '',
       title: document.title || null,
-      domain: window.location.hostname,
+      domain: window.location ? window.location.hostname : 'localhost',
     };
   }
 
@@ -143,7 +161,6 @@ const Sanitizer = (() => {
     fields.forEach((f) => {
       if (f.redacted) {
         totalRedacted++;
-        // Track what types were redacted
         const type = _inferPIIType(f);
         detected[type] = (detected[type] || 0) + 1;
       }
@@ -170,7 +187,6 @@ const Sanitizer = (() => {
   }
 
   function _checkForLeaks(serialized) {
-    // Check for obvious PII patterns in the serialized payload
     const checks = PIIDetector.scanValue(serialized);
     return {
       hasLeaks: checks.length > 0,
@@ -179,7 +195,6 @@ const Sanitizer = (() => {
   }
 
   function _deepSanitize(payload) {
-    // Nuclear option: re-sanitize by serializing and replacing
     let text = JSON.stringify(payload);
     text = Redactor.redactText(text);
     return JSON.parse(text);
@@ -190,12 +205,13 @@ const Sanitizer = (() => {
       const label = document.querySelector(`label[for="${element.id}"]`);
       if (label) return label.textContent.trim();
     }
-    const parent = element.closest('label');
+    const parent = element.closest ? element.closest('label') : null;
     if (parent) return parent.textContent.trim();
-    return element.getAttribute('aria-label') || element.placeholder || null;
+    return (element.getAttribute ? element.getAttribute('aria-label') : null) || element.placeholder || null;
   }
 
   function _isVisible(el) {
+    if (typeof window.getComputedStyle !== 'function') return true;
     const style = window.getComputedStyle(el);
     return style.display !== 'none' && style.visibility !== 'hidden' && el.offsetParent !== null;
   }
